@@ -5,7 +5,7 @@ require("dotenv").config();
 const port = process.env.PORT || 80;
 const connectDB = require("./config/db");
 
-connectDB();
+connectDB(process.env.URI);
 
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");

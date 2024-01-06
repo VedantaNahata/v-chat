@@ -1,0 +1,19 @@
+body {
+    background-color: #000;
+    font-family: 'Montserrat';
+    color: #fff;
+}
+h1 {
+    text-align: center;
+    padding: 5px 7px;
+}
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+a {
+    color: #dfff;
+}

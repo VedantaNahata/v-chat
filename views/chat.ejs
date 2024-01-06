@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Messages</title>
+    <link rel="stylesheet" href="/css/chat.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="search">
+      <h2>Welcome, <%= userName %>!</h2>
+      <input type="text" placeholder="Search user" id="search-users" />
+    </div>
+    <div class="chat-container">
+      <div class="chat-sidebar">
+        <ul class="contact-list"></ul>
+      </div>
+      <div class="chat-body">
+        <div class="chat-header">
+          <h1>V-Chat</h1>
+        </div>
+        <ul class="chat-messages"></ul>
+        <div class="chat-input">
+          <input type="text" placeholder="Type your message here" />
+          <button>Send</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-features">
+      <button id="logout" class="feature">Logout</button>
+    </div>
+  </body>
+  <script>
+    document.getElementById("logout").addEventListener("click", async () => {
+    try {
+      const response = await fetch("/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.href = "/";
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("An error occurred during logout");
+    }
+  });
+  </script>
+</html>

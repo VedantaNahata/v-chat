@@ -1,22 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
-    <link rel="stylesheet" type="text/css" href="/css/signup.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup | V-Chat</title>
+    <link rel="stylesheet" type="text/css" href="/css/signup.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
     <div class="form-container">
-        <h1>Signup</h1>
-        <form action="/signup" method="POST">
-            <input type="text" placeholder="Name" name="name" required autocomplete="off">
-            <input type="email" placeholder="Email" name="email" required autocomplete="off">
-            <input type="password" placeholder="Password" name="password" required autocomplete="off">
-            <button type="submit">Signup</button>
-        </form>
+      <h1>Signup</h1>
+      <form action="/signup" method="POST" id="signupForm">
+        <input
+          type="text"
+          id="nameInp"
+          placeholder="Name"
+          name="name"
+          required
+          autocomplete="off"
+        />
+        <input
+          type="email"
+          id="emailInp"
+          placeholder="Email"
+          name="email"
+          required
+          autocomplete="off"
+        />
+        <input
+          type="password"
+          id="passwordInp"
+          placeholder="Password"
+          name="password"
+          required
+          autocomplete="off"
+        />
+        <button type="submit">Signup</button>
+      </form>
+      <p>Already have a account? <a href="/login">Login now</a></p> 
     </div>
-</body>
+  </body>
+
+  <script>
+    toastr.options = {
+      closeButton: true,
+      debug: false,
+      newestOnTop: false,
+      progressBar: true,
+      positionClass: "toast-top-right",
+      preventDuplicates: false,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      timeOut: "5000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+    };
+
+    const signupForm = document.getElementById("signupForm");
+    let nameInp = document.getElementById("nameInp");
+    let emailInp = document.getElementById("emailInp");
+    let passwordInp = document.getElementById("passwordInp");
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = {
+        name: nameInp.value,
+        email: emailInp.value,
+        password: passwordInp.value,
+      };
+
+      const apiUrl = "/signup"
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert(data.message);
+          window.location.href = "/login";
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        alert("An error occurred ");
+      }
+    });
+  </script> 
 </html>
